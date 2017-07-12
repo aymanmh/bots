@@ -1,3 +1,5 @@
+#load "..\API\BingTranslator.csx"
+
 using System;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
@@ -8,6 +10,7 @@ using Microsoft.Bot.Connector;
 public class EchoDialog : IDialog<object>
 {
     protected int count = 1;
+    protected BingTranslator mybt0;
 
     public Task StartAsync(IDialogContext context)
     {
@@ -39,6 +42,22 @@ public class EchoDialog : IDialog<object>
                 "Didn't get that!",
                 promptStyle: PromptStyle.Auto);
         }
+        else if (message.Text.Contains("?tra") )
+        {
+            if(mybt0==null)
+                mybt0 = new BingTranslator();
+
+            await context.PostAsync($"{this.count++}: "+mybt0.translateToArabic(message.Text.Substring(message.Text.IndexOf("?tr")+4)));
+            context.Wait(MessageReceivedAsync);
+        }
+        else if (message.Text.Contains("?trm"))
+        {
+            if (mybt0 == null)
+                mybt0 = new BingTranslator();
+
+            await context.PostAsync($"{this.count++}: " + mybt0.translateToMalay(message.Text.Substring(message.Text.IndexOf("?trm") + 4)));
+            context.Wait(MessageReceivedAsync);
+        }
         else
         {
             await context.PostAsync($"{this.count++}: You said {message.Text}");
@@ -60,4 +79,6 @@ public class EchoDialog : IDialog<object>
         }
         context.Wait(MessageReceivedAsync);
     }
+
+
 }

@@ -14,7 +14,7 @@ type %temp%\settings-list
 erase %temp%\settings-list 
 
 :start
-@func host start -p 3978 
+@func host start -p 18978 
 goto :eof
 
 :filesize
