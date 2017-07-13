@@ -37,6 +37,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{021C9512-D45F-464F-9D69-DA3D13142A05}"
 	ProjectSection(SolutionItems) = preProject
 		API\BingTranslator.csx = API\BingTranslator.csx
+		API\WikitionaryEntry.csx = API\WikitionaryEntry.csx
+		API\WordUsage.csx = API\WordUsage.csx
 	EndProjectSection
 EndProject
 Global

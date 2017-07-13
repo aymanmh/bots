@@ -1,23 +1,41 @@
 ﻿#r "..\bin\BingAPIClient.dll"
 using System;
+using System.Threading;
 using LangugeBot;
+using Microsoft.Bot.Builder.Azure;
 
 [Serializable]
 public class BingTranslator
 {
     private BingAPIClient myBC;
+    private string endpoint;
+    private string key;
     public BingTranslator()
 	{
-        myBC = new BingAPIClient("https://api.microsofttranslator.com/v2/Http.svc/Translate?", "e3208cac1c46424d9e81a94e900f15d3");
+        endpoint = Utils.GetAppSetting("BingAPIEndpoint");
+        key = Utils.GetAppSetting("BingAPIKey");
+        myBC = new BingAPIClient(endpoint, key);
     }
 
-    public string translateToArabic(string word)
+    public string translate(string word,string code)
     {
-        return word + ": " + myBC.translate(word, BingAPIClient.ARABIC);
+        string translation = "";
+        switch(code)
+        {
+            case "/ar":
+                 translation = ": " + myBC.translate(word, BingAPIClient.ARABIC);
+                break;
+            case "/my":
+                 translation = ": " + myBC.translate(word, BingAPIClient.MALAY);
+                break;
+            case "/jp":
+                 translation = ": " + myBC.translate(word, BingAPIClient.JAPANESE);
+                break;
+            default:
+                return "language not implemented";
+        }
+
+        return word + translation;
     }
 
-    public string translateToMalay(string word)
-    {
-        return word+": " + myBC.translate(word, BingAPIClient.MALAY);
-    }
 }
