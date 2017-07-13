@@ -1,6 +1,7 @@
 #load "..\API\BingTranslator.csx"
 #load "..\API\WordUsage.csx"
 #load "..\API\WikitionaryEntry.csx"
+#load "..\API\DictionaryClient.csx"
 
 using System;
 using System.Threading;
@@ -17,7 +18,7 @@ public class EchoDialog : IDialog<object>
     protected BingTranslator myBingTranslator;
     protected WordUsage myWordUsage;
     protected WikitionaryEntry myWikiEntryClient;
-
+    protected DictionaryClient myDictionaryClient; 
     protected static string[] genericReplyList = new string[] { "huh?!", "what?", "hmmm...", ":sweat_smile:",":grin:" };
 
     public Task StartAsync(IDialogContext context)
@@ -83,6 +84,18 @@ public class EchoDialog : IDialog<object>
                     if (myWikiEntryClient == null)
                         myWikiEntryClient = new WikitionaryEntry();
                     await context.PostAsync(myWikiEntryClient.getWikiEntry(splitMsg[1]));
+                }
+            }
+            else if (message.Text.Contains("/def "))
+            {
+                string[] splitMsg = message.Text.Split();
+                if (splitMsg.Length != 2)
+                    await context.PostAsync($"Please follow the {splitMsg[0]} command with ONE word only!");
+                else
+                {
+                    if (myDictionaryClient == null)
+                        myDictionaryClient = new DictionaryClient();
+                    await context.PostAsync(myDictionaryClient.getDefinition(splitMsg[1]));
                 }
             }
             else

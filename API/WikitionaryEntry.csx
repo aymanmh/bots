@@ -1,7 +1,7 @@
 ﻿#r "..\bin\WikitionaryClient.dll"
 using System;
 using System.Text;
-using LangugeBot;
+using LanguageBot;
 using Microsoft.Bot.Builder.Azure;
 
 [Serializable]
