@@ -16,7 +16,7 @@ public class DictionaryClient
         endpoint = Utils.GetAppSetting("WordAPIEndpoint");
         key = Utils.GetAppSetting("WordAPIKey");
 
-        myWordAPIClient = new WordAPIClient(endpoint, key);
+       myWordAPIClient = new WordAPIClient(endpoint, key);
     }
 
     public string getDefinition(string word)
@@ -25,7 +25,7 @@ public class DictionaryClient
         WordDefinition result = myWordAPIClient.getWordEntry(word);
         if (result == null)
         {
-            return $"No entries were found for: {word}";
+            return $"No entries were found for: {word} :( ";
         }
         string entry = buildEntry(result);
         return entry;
@@ -59,7 +59,7 @@ public class DictionaryClient
             if (wordDef.results[i].synonyms != null)
             {
                 if (wordDef.results[i].synonyms.Count > 0)
-                    entry.Append("Synonyms:");
+                    entry.Append("synonyms: ");
 
                 for (int j = 0; j < wordDef.results[i].synonyms.Count; j++)
                 {

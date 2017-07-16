@@ -49,6 +49,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
                             if (!string.IsNullOrEmpty(newMember.Name))
                             {
                                 reply.Text += $" {newMember.Name}";
+                                log.Info($"New user:{newMember.Name}");
                             }
                             reply.Text += "!";
                             await client.Conversations.ReplyToActivityAsync(reply);
